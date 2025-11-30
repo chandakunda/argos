@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "argos_academic_system"
+version = "1.0.0"
+description = "Argos Academic Management System"
+readme = "README.md"
+requires-python = ">=3.10"
+
+authors = [
+    { name = "Francis Munganga", email = "francis@example.com" }
+]
+
+license = { text = "MIT" }
+
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "pydantic",
+    "httpx",
+    "sqlite-utils"
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "faker"]
+
+[tool.setuptools.packages.find]
+where = ["argos"]

@@ -1,0 +1,15 @@
+Argos Phase 9 — Testing, CI/CD, DevOps & Performance
+=====================================================
+
+Included in this phase:
+-----------------------
+✓ pytest configuration  
+✓ unit / integration / property-based tests  
+✓ async load performance test  
+✓ Dockerfile for API  
+✓ Dockerfile for Services  
+✓ docker-compose environment  
+✓ GitHub Actions CI (install → lint → test → build)  
+✓ Performance results folder  
+
+This completes Phase 9.

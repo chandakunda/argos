@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: devops/docker/Dockerfile.api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  scheduler:
+    build:
+      context: .
+      dockerfile: devops/docker/Dockerfile.services
+    command: ["python", "services/scheduler_service/main.py"]
+    depends_on:
+      - db
+
+  db:
+    image: sqlite3
+    container_name: argos_sqlite

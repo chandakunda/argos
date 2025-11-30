@@ -1,0 +1,4 @@
+{
+    "checks_passed": ["encryption_enabled", "audit_log_hashchain_valid"],
+    "violations": ["weak_password_policy"]
+}

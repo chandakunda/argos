@@ -1,0 +1,21 @@
+Argos Reporting System — Summary
+================================
+
+Reports Implemented:
+--------------------
+1. AdminSummaryReport
+2. LecturerCoursePerformanceReport
+3. ComplianceAuditReport
+
+Formats Supported:
+------------------
+- JSON
+- CSV
+
+Features:
+---------
+- Runtime polymorphism (all reports implement Reportable)
+- Factory-based creation
+- Easily extensible to new formats (PDF, XML)
+- Tests included to validate basic functionality
+

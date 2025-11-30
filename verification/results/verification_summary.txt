@@ -1,0 +1,25 @@
+Argos Academic System — Formal Verification Summary
+===================================================
+
+Invariant Verified:
+-------------------
+"No student may be enrolled in overlapping sections."
+
+Verification Steps:
+-------------------
+1. Implemented critical invariant function:
+       check_no_time_overlap()
+2. Integrated invariant into runtime monitor:
+       RuntimeMonitor.validate_timetable()
+3. Formal specification (pseudo TLA+):
+       Provided in formal_model.py
+4. Automated tests executed:
+       - Valid timetable
+       - Overlap detection
+       - Edge cases
+       - Multiple section scenarios
+
+Result:
+-------
+Invariant holds under all tested valid cases.
+Violations correctly detected and raised as InvariantViolation.
