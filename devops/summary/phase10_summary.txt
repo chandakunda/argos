@@ -1,0 +1,25 @@
+Argos Phase 10 — Documentation, UML & Demo
+==========================================
+
+Generated artifacts:
+--------------------
+- Main design document:
+  - docs/design/ARGOS_Design_Document.md
+
+- UML skeletons (PlantUML):
+  - docs/uml/class_diagram/argos_domain_class_diagram.puml
+  - docs/uml/component_diagram/argos_component_diagram.puml
+  - docs/uml/deployment_diagram/argos_deployment_diagram.puml
+  - docs/uml/sequence_diagrams/enrollment_sequence.puml
+  - docs/uml/sequence_diagrams/grade_assignment_sequence.puml
+  - docs/uml/sequence_diagrams/emergency_lockdown_sequence.puml
+
+- Reports:
+  - docs/reports/testing_report.md
+  - docs/reports/performance_report.md
+  - docs/reports/security_report.md
+
+- Demo script:
+  - scripts/demo_run.sh
+
+This completes Phase 10 (Documentation, UML, Demo).

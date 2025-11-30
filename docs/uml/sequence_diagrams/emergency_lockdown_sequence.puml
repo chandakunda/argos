@@ -1,0 +1,19 @@
+@startuml
+title Emergency Lockdown Sequence Diagram (Skeleton)
+
+actor SecurityOfficer
+participant API
+participant SecurityService
+participant FacilityService
+database DB
+
+SecurityOfficer -> API: POST /security/lockdown
+API -> SecurityService: authorize(action, context)
+SecurityService -> DB: log audit entry
+SecurityService -> FacilityService: trigger_lockdown()
+FacilityService -> DB: update resource states (doors locked)
+FacilityService --> SecurityService: status
+SecurityService --> API: lockdown result
+API --> SecurityOfficer: lockdown status + audit id
+
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+title Grade Assignment Sequence Diagram (Skeleton)
+
+actor Lecturer
+participant API
+participant EnrollmentService
+database DB
+
+Lecturer -> API: POST /grades
+API -> EnrollmentService: assign_grade(enrollment, grade)
+EnrollmentService -> DB: store immutable Grade
+API --> Lecturer: confirmation
+
+@enduml

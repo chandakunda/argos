@@ -1,0 +1,47 @@
+@startuml
+title Argos Domain Class Diagram (Skeleton)
+
+class AbstractEntity {
+  +id: str
+  +version: int
+  +created_at: datetime
+  +updated_at: datetime
+}
+
+abstract class Person {
+  +id: str
+  +name: str
+  +email: str
+}
+
+class Student
+class Lecturer
+class Staff
+class Guest
+
+class Course {
+  +id: str
+  +title: str
+}
+
+class Section {
+  +id: str
+  +course_id: str
+}
+
+class Enrollment {
+  +id: str
+  +student_id: str
+  +section_id: str
+}
+
+Person <|-- Student
+Person <|-- Lecturer
+Person <|-- Staff
+Person <|-- Guest
+
+Course "1" -- "many" Section
+Student "1" -- "many" Enrollment
+Section "1" -- "many" Enrollment
+
+@enduml

@@ -1,0 +1,18 @@
+@startuml
+title Enrollment Flow Sequence Diagram (Skeleton)
+
+actor Student
+participant API
+participant EnrollmentService
+participant SchedulerService
+database DB
+
+Student -> API: POST /enroll
+API -> EnrollmentService: enroll(student, section)
+EnrollmentService -> DB: save enrollment
+EnrollmentService -> SchedulerService: EnrollmentEvent
+SchedulerService -> DB: update timetable
+SchedulerService --> API: updated schedule info
+API --> Student: enrollment + schedule response
+
+@enduml

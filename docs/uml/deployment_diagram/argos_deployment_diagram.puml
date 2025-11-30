@@ -1,0 +1,34 @@
+@startuml
+title Argos Deployment Diagram (Skeleton)
+
+node "User Machine" {
+  artifact "Browser / Client" as client
+}
+
+node "Application Server" {
+  node "API Container" {
+    artifact "FastAPI App" as api
+  }
+
+  node "Services Container" {
+    artifact "EnrollmentService"
+    artifact "SchedulerService"
+    artifact "SecurityService"
+    artifact "MLService"
+  }
+}
+
+node "Data Layer" {
+  database "SQLite DB" as db
+  artifact "Event Store"
+  artifact "Snapshot Store"
+}
+
+client --> api
+api --> db
+api --> "Event Store"
+"EnrollmentService" --> "Event Store"
+"SchedulerService" --> "Event Store"
+"SchedulerService" --> db
+
+@enduml

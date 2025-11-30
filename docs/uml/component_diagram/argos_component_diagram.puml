@@ -1,0 +1,35 @@
+@startuml
+title Argos Component Diagram (Skeleton)
+
+package "API Layer" {
+  [REST API]
+  [gRPC Gateway]
+}
+
+package "Services" {
+  [IdentityService]
+  [EnrollmentService]
+  [SchedulerService]
+  [SecurityService]
+  [Analytics/MLService]
+  [ReportService]
+}
+
+package "Infrastructure" {
+  [SQLite DB]
+  [Event Store]
+  [Snapshot Store]
+}
+
+[REST API] --> [IdentityService]
+[REST API] --> [EnrollmentService]
+[REST API] --> [ReportService]
+
+[EnrollmentService] --> [Event Store]
+[SchedulerService] --> [Event Store]
+[SchedulerService] --> [SQLite DB]
+
+[SecurityService] --> [SQLite DB]
+[Analytics/MLService] --> [SQLite DB]
+
+@enduml
