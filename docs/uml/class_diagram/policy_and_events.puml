@@ -1,0 +1,78 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+' ================================
+' ENUMS
+' ================================
+enum PolicyResult {
+    ALLOW
+    DENY
+}
+
+enum EventType {
+    GENERIC
+    ENROLLMENT
+    FACILITY
+    SECURITY
+    ANALYTICS
+}
+
+' ================================
+' POLICY CLASSES
+' ================================
+abstract class Policy {
+    +evaluate(context): PolicyResult
+}
+
+class PolicyContext {
+    subject
+    resource
+    action
+    metadata: dict
+}
+
+class PolicyEngine {
+    policies: List<Policy>
+    +add_policy()
+    +evaluate()
+}
+
+abstract class EnrollmentPolicy {
+    +evaluate(context): PolicyResult
+}
+
+Policy <|-- EnrollmentPolicy
+PolicyEngine --> "0..*" Policy
+Policy --> PolicyContext : uses
+
+' ================================
+' EVENT CLASSES
+' ================================
+class Event {
+    event_id: str
+    event_type: EventType
+    payload: dict
+    entity_id: str
+    timestamp: datetime
+}
+
+class EventStream {
+    _events: List<Event>
+    +append()
+    +get_all()
+}
+
+abstract class EventSubscriber {
+    +handle_event(Event)
+}
+
+class EventBus {
+    _subscribers: List<EventSubscriber>
+    +subscribe()
+    +publish()
+}
+
+EventStream --> "0..*" Event
+EventBus --> "0..*" EventSubscriber
+
+@enduml

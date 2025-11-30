@@ -1,0 +1,58 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+' ================================
+' BASE ENTITY
+' ================================
+abstract class AbstractEntity
+
+' ================================
+' FACILITY / ROOM HIERARCHY
+' ================================
+class Facility {
+    name: str
+    location: str
+}
+
+class Room {
+    capacity: int
+    resources: List<Resource>
+}
+
+class SmartRoom {
+    automation_level: str
+}
+
+class SmartLectureRoom {
+    has_projector: bool
+}
+
+AbstractEntity <|-- Facility
+Facility <|-- Room
+Room <|-- SmartRoom
+SmartRoom <|-- SmartLectureRoom
+
+' ================================
+' RESOURCE HIERARCHY
+' ================================
+abstract class Resource {
+    name: str
+    status: str
+}
+
+class SensorResource {
+    sensor_type: str
+    last_reading: any
+}
+
+class ActuatorResource {
+    action_type: str
+}
+
+AbstractEntity <|-- Resource
+Resource <|-- SensorResource
+Resource <|-- ActuatorResource
+
+Room --> "0..*" Resource : contains
+
+@enduml

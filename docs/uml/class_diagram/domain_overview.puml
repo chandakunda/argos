@@ -1,0 +1,102 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+' ================================
+' ENUMS
+' ================================
+enum LifecycleState {
+    ACTIVE
+    INACTIVE
+    DELETED
+}
+
+enum RoleType {
+    STUDENT
+    LECTURER
+    STAFF
+    TEACHING_ASSISTANT
+    ADMIN
+    SECURITY
+    GUEST
+}
+
+' ================================
+' BASE ENTITY
+' ================================
+abstract class AbstractEntity {
+    id: str
+    version: int
+    lifecycle_state: LifecycleState
+    created_at: datetime
+    updated_at: datetime
+}
+
+' ================================
+' PERSON HIERARCHY
+' ================================
+abstract class Person {
+    name: str
+    email: str
+    roles: List<RoleAssignment>
+}
+
+class Student
+class Lecturer
+class Staff
+class Guest
+
+class RoleAssignment {
+    role: RoleType
+    assigned_at: datetime
+}
+
+RoleAssignment --> RoleType
+Person --> "0..*" RoleAssignment
+
+Person <|-- Student
+Person <|-- Lecturer
+Person <|-- Staff
+Person <|-- Guest
+AbstractEntity <|-- Person
+
+' ================================
+' ACADEMIC DOMAIN
+' ================================
+class Course {
+    code: str
+    title: str
+    description: str
+}
+
+class Section {
+    course_id: str
+    section_number: str
+    schedule: dict
+}
+
+class Syllabus {
+    course_id: str
+    topics: list
+}
+
+class Assessment {
+    section_id: str
+    name: str
+    max_score: float
+}
+
+class Grade <<immutable>> {
+    score: float
+    letter: str
+}
+
+AbstractEntity <|-- Course
+AbstractEntity <|-- Section
+AbstractEntity <|-- Syllabus
+AbstractEntity <|-- Assessment
+
+Section --> Course : belongs to
+Syllabus --> Course : describes
+Assessment --> Section : evaluates
+
+@enduml
