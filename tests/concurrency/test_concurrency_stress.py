@@ -3,7 +3,12 @@
 # and then checks that the final state is consistent.
 
 import threading
+
 from common.domain.events.event_bus import EventBus
+from common.infrastructure.db.database import Database
+from common.infrastructure.db.schema_init import create_schema
+from common.infrastructure.event_store.sqlite_event_store import SQLiteEventStore
+
 from services.enrollment_service.app.service.enrollment_service import EnrollmentService
 from services.scheduler_service.app.service.scheduler_service import SchedulerService
 
@@ -21,13 +26,18 @@ def test_concurrent_enrollments():
     """
     This test:
     - Creates one EventBus, one SchedulerService, and one EnrollmentService.
+    - Uses a SQLiteEventStore to persist all events.
     - Spawns multiple threads, each enrolling several students.
     - Verifies that:
         * The number of unique enrolled students is as expected.
         * The SchedulerService recorded all enrollment actions.
     """
 
-    event_bus = EventBus()
+    db = Database("test_argos_events.db")
+    create_schema(db)
+    event_store = SQLiteEventStore(db)
+
+    event_bus = EventBus(event_store=event_store)
     scheduler_service = SchedulerService(event_bus)
     enrollment_service = EnrollmentService(event_bus)
 
@@ -86,3 +96,12 @@ def test_concurrent_enrollments():
         f"Expected {len(all_student_ids)} schedule entries, "
         f"but got {len(schedule_entries)}"
     )
+
+    # Optional: validate the number of events stored
+    all_events = event_store.get_all_events()
+    assert len(all_events) == len(all_student_ids), (
+        f"Expected {len(all_student_ids)} events in store, "
+        f"but got {len(all_events)}"
+    )
+
+    db.close()
